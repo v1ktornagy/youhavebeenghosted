@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>👻 You've been ghosted!</title>
+<meta name="description" content="Boo! Tap for spooky jokes and a pumpkin hunt.">
+<meta property="og:title" content="👻 You've been ghosted!">
+<meta property="og:description" content="Boo! Tap for spooky jokes and a pumpkin hunt.">
+<meta property="og:url" content="https://youhavebeenghosted.com/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2a1446">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
+<style>
+  :root {
+    --night: #2a1446;
+    --night-deep: #160a26;
+    --orange: #ff8a1f;
+    --orange-soft: #ffb566;
+    --ghost: #fdfbff;
+    --text: #fff6ec;
+    --card: rgba(255, 255, 255, .08);
+    --stone: #8d8aa3;
+    --stone-dark: #5f5c75;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 80% 8%, var(--orange-soft) 0 34px, rgba(255,138,31,.25) 35px, transparent 120px),
+      radial-gradient(ellipse at 50% 120%, rgba(255,138,31,.45), transparent 60%),
+      linear-gradient(var(--night-deep), var(--night) 55%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    text-align: center;
+  }
+  main { max-width: 440px; margin: 0 auto; padding: 24px 16px 32px; }
+
+  .sky { position: relative; height: 210px; overflow: hidden; }
+  .bat { position: absolute; font-size: 28px; animation: flap 7s linear infinite; }
+  .bat:nth-child(1) { top: 10px; animation-delay: 0s; }
+  .bat:nth-child(2) { top: 60px; animation-delay: -2.5s; font-size: 22px; animation-duration: 9s; }
+  .bat:nth-child(3) { top: 120px; animation-delay: -5s; font-size: 18px; animation-duration: 11s; }
+  @keyframes flap {
+    0%   { transform: translate(-60px, 0) scaleX(-1); }
+    25%  { transform: translate(25vw, -14px) scaleX(-1); }
+    50%  { transform: translate(50vw, 8px) scaleX(-1); }
+    75%  { transform: translate(75vw, -10px) scaleX(-1); }
+    100% { transform: translate(110vw, 0) scaleX(-1); }
+  }
+  .ghost-btn {
+    position: absolute; left: 50%; top: 20px; margin-left: -70px; margin-top: 10px;
+    width: 140px; background: none; border: 0; padding: 0; cursor: pointer;
+    animation: float 3.2s ease-in-out infinite;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .ghost-btn svg { width: 140px; height: auto; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35)); }
+  .ghost-btn.wiggle svg { animation: wiggle .5s ease-in-out; }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-16px) rotate(3deg); } }
+  @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-12deg) scale(1.08); } 75% { transform: rotate(12deg) scale(1.08); } }
+  .bubble {
+    position: absolute; right: -14px; top: -8px;
+    background: var(--ghost); color: var(--night); font-weight: 800;
+    padding: 4px 10px; border-radius: 14px; font-size: 15px;
+    opacity: 0; transition: opacity .2s;
+  }
+  .bubble.show { opacity: 1; }
+
+  h1 { font-size: clamp(30px, 9vw, 42px); line-height: 1.1; margin: 8px 0 10px; font-weight: 900; letter-spacing: -.5px; text-shadow: 0 3px 0 var(--night-deep); }
+  h1 .boo { color: var(--orange); display: block; font-size: 1.3em; }
+  .sub { font-size: 18px; margin: 0 0 28px; opacity: .92; }
+
+  .card { background: var(--card); border-radius: 20px; padding: 18px 16px; margin: 0 0 18px; }
+  h2 { margin: 0 0 6px; font-size: 21px; }
+  .hint { margin: 0 0 14px; opacity: .8; font-size: 15px; }
+
+  button.big {
+    font: inherit; font-weight: 800; font-size: 18px;
+    background: var(--orange); color: var(--night-deep);
+    border: 0; border-radius: 999px; padding: 14px 22px; min-height: 52px;
+    width: 100%; cursor: pointer; box-shadow: 0 4px 0 #b85a00;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button.big:active { transform: translateY(3px); box-shadow: 0 1px 0 #b85a00; }
+  button.ghosty { background: var(--ghost); box-shadow: 0 4px 0 #b9b2cc; }
+  button.ghosty:active { box-shadow: 0 1px 0 #b9b2cc; }
+  button:focus-visible { outline: 3px solid var(--ghost); outline-offset: 3px; }
+
+  .joke { min-height: 3.2em; margin: 16px 4px 0; font-size: 18px; line-height: 1.4; }
+  .joke .punch { display: block; color: var(--orange-soft); font-weight: 800; margin-top: 6px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0 auto 14px; max-width: 300px; }
+  .stone {
+    aspect-ratio: 4 / 5; border: 0; cursor: pointer; font-size: 34px; font-weight: 900;
+    color: var(--stone-dark); background: linear-gradient(var(--stone), var(--stone-dark));
+    border-radius: 50% 50% 10px 10px / 40% 40% 10px 10px;
+    box-shadow: inset 0 -6px 0 rgba(0,0,0,.2), 0 6px 0 #3b2a17;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .stone:not(:disabled) { color: #d8d5e6; }
+  .stone:disabled { cursor: default; background: linear-gradient(#4b3a63, #3a2b50); }
+  .stone.found { background: radial-gradient(circle, rgba(255,138,31,.6), #3a2b50 70%); animation: pop .4s; }
+  @keyframes pop { 50% { transform: scale(1.18); } }
+  .status { min-height: 1.5em; font-size: 17px; font-weight: 700; margin: 0 0 12px; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row button.big { font-size: 16px; padding: 12px 10px; }
+
+  footer { margin-top: 26px; font-size: 20px; font-weight: 800; }
+  footer .sig { display: block; font-size: 16px; font-weight: 600; opacity: .85; margin-top: 6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .bat:nth-child(1) { left: 12%; } .bat:nth-child(2) { left: 72%; } .bat:nth-child(3) { left: 30%; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="sky">
+    <span class="bat" aria-hidden="true">🦇</span>
+    <span class="bat" aria-hidden="true">🦇</span>
+    <span class="bat" aria-hidden="true">🦇</span>
+    <button class="ghost-btn" id="ghost" type="button" aria-label="Poke the ghost">
+      <span class="bubble" id="bubble" aria-live="polite"></span>
+      <svg viewBox="0 0 140 160" aria-hidden="true">
+        <path d="M70 6C34 6 14 34 14 70v74c0 6 7 9 11 4l9-10 10 12c3 4 9 4 12 0l14-15 14 15c3 4 9 4 12 0l10-12 9 10c4 5 11 2 11-4V70C126 34 106 6 70 6z" fill="#fdfbff"/>
+        <ellipse cx="50" cy="66" rx="9" ry="12" fill="#2a1446"/>
+        <ellipse cx="90" cy="66" rx="9" ry="12" fill="#2a1446"/>
+        <circle cx="53" cy="61" r="3.5" fill="#fff"/>
+        <circle cx="93" cy="61" r="3.5" fill="#fff"/>
+        <ellipse cx="36" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
+        <ellipse cx="104" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
+        <path d="M56 88q14 18 28 0" fill="#2a1446"/>
+        <path d="M64 94q6 6 12 0q-2 6-6 6t-6-6z" fill="#ff7a9a"/>
+      </svg>
+    </button>
+  </div>
+
+  <h1><span class="boo">Boo!</span> You've been ghosted! 👻</h1>
+  <p class="sub">Don't worry, I'm still here. Happy Halloween!</p>
+
+  <section class="card">
+    <button class="big" id="jokeBtn" type="button">Tell me a spooky joke</button>
+    <p class="joke" id="joke" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2>🎃 Pumpkin Hunt</h2>
+    <p class="hint">A pumpkin is hiding behind one gravestone. Can you find it?</p>
+    <div class="grid" id="grid"></div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <button class="big ghosty" id="againBtn" type="button" hidden>Play again</button>
+  </section>
+
+  <div class="row">
+    <button class="big ghosty" id="soundBtn" type="button" aria-pressed="false">🔊 Make it spooky</button>
+    <button class="big" id="shareBtn" type="button">📤 Share</button>
+  </div>
+  <p class="status" id="shareStatus" aria-live="polite"></p>
+
+  <footer>Trick or treat! 🎃<span class="sig">— Viktor 👻</span></footer>
+</main>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const URL_TO_SHARE = 'https://youhavebeenghosted.com';
+
+  // --- Spooky Jokes: shuffled deck, no repeats until all have been shown ---
+  const JOKES = [
+    ["Why didn't the skeleton go to the party?", "He had no body to go with."],
+    ["What do ghosts put on their cereal?", "Boo-berries!"],
+    ["Why are ghosts terrible at lying?", "You can see right through them."],
+    ["What's a ghost's favorite dessert?", "I scream!"],
+    ["Which room does a ghost never need?", "The living room."],
+    ["What do you call a witch at the beach?", "A sand-witch."],
+    ["How do pumpkins stay in shape?", "They do squash."],
+    ["Why don't mummies take vacations?", "They're scared they'll relax and unwind."],
+    ["What's a ghost's favorite theme park ride?", "The roller-ghoster."],
+    ["What do you call a ghost's mistake?", "A boo-boo."],
+    ["What do skeletons say before dinner?", "Bone appétit!"],
+    ["What do you call a pumpkin that guards the pool?", "A life-gourd."],
+    ["Where do ghosts mail their letters?", "At the ghost office."],
+    ["What do bats do for fun?", "They just hang out."],
+    ["Why did the cyclops close his school?", "He only had one pupil."],
+    ["What kind of music do mummies love?", "Wrap music."],
+    ["What do you get if you cross a vampire with a snowman?", "Frostbite."],
+    ["Why do ghosts love elevators?", "They lift their spirits."],
+    ["How do you fix a cracked jack-o'-lantern?", "With a pumpkin patch."],
+    ["What's a ghost's favorite game?", "Hide and shriek."],
+    ["What did one ghost say to the other?", "\"Do you believe in people?\""],
+  ];
+  let deck = [];
+  const nextJoke = () => {
+    if (!deck.length) deck = JOKES.map((_, i) => i).sort(() => Math.random() - .5);
+    return JOKES[deck.pop()];
+  };
+  $('jokeBtn').addEventListener('click', () => {
+    const [q, a] = nextJoke();
+    const el = $('joke');
+    el.textContent = q;
+    const punch = document.createElement('span');
+    punch.className = 'punch';
+    punch.textContent = a;
+    el.appendChild(punch);
+  });
+
+  // --- Spooky Sound: synthesized wail, only after the visitor opts in ---
+  let audio = null;
+  let soundOn = false;
+  const wail = () => {
+    if (!soundOn || !audio) return;
+    const t = audio.currentTime;
+    const osc = audio.createOscillator();
+    const lfo = audio.createOscillator();
+    const lfoGain = audio.createGain();
+    const gain = audio.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(320, t);
+    osc.frequency.exponentialRampToValueAtTime(620, t + .7);
+    osc.frequency.exponentialRampToValueAtTime(360, t + 1.8);
+    lfo.frequency.value = 6;
+    lfoGain.gain.value = 18;
+    lfo.connect(lfoGain).connect(osc.frequency);
+    gain.gain.setValueAtTime(0, t);
+    gain.gain.linearRampToValueAtTime(.18, t + .25);
+    gain.gain.linearRampToValueAtTime(0, t + 1.9);
+    osc.connect(gain).connect(audio.destination);
+    osc.start(t); lfo.start(t);
+    osc.stop(t + 2); lfo.stop(t + 2);
+  };
+  $('soundBtn').addEventListener('click', () => {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) { $('soundBtn').textContent = '🔇 No sound here'; return; }
+    if (!audio) audio = new Ctx();
+    audio.resume();
+    soundOn = !soundOn;
+    $('soundBtn').setAttribute('aria-pressed', String(soundOn));
+    $('soundBtn').textContent = soundOn ? '🔇 Shh, quiet' : '🔊 Make it spooky';
+    wail();
+  });
+
+  // --- Ghost poke ---
+  const LINES = ['Boo!', 'Hehe!', 'Eek!', 'Wooo!', 'Tickles!'];
+  let bubbleTimer;
+  $('ghost').addEventListener('click', () => {
+    const g = $('ghost'), b = $('bubble');
+    g.classList.remove('wiggle'); void g.offsetWidth; g.classList.add('wiggle');
+    b.textContent = LINES[Math.floor(Math.random() * LINES.length)];
+    b.classList.add('show');
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => b.classList.remove('show'), 1200);
+    wail();
+  });
+
+  // --- Pumpkin Hunt ---
+  const MISSES = ['👻', '🕸️', '🦇', '🍬', '🕷️', '🧦'];
+  let pumpkinAt, taps;
+  const newRound = () => {
+    pumpkinAt = Math.floor(Math.random() * 9);
+    taps = 0;
+    $('status').textContent = '';
+    $('againBtn').hidden = true;
+    const grid = $('grid');
+    grid.replaceChildren();
+    for (let i = 0; i < 9; i++) {
+      const s = document.createElement('button');
+      s.type = 'button';
+      s.className = 'stone';
+      s.textContent = '?';
+      s.setAttribute('aria-label', `Gravestone ${i + 1}`);
+      s.addEventListener('click', () => peek(s, i));
+      grid.appendChild(s);
+    }
+  };
+  const peek = (stone, i) => {
+    taps++;
+    stone.disabled = true;
+    if (i === pumpkinAt) {
+      stone.textContent = '🎃';
+      stone.classList.add('found');
+      stone.setAttribute('aria-label', 'Pumpkin!');
+      $('grid').querySelectorAll('.stone').forEach(s => { s.disabled = true; });
+      $('status').textContent = taps === 1
+        ? 'WOW! First try! 🎉'
+        : `Found it in ${taps} taps! 🎉`;
+      $('againBtn').hidden = false;
+      wail();
+    } else {
+      stone.textContent = MISSES[Math.floor(Math.random() * MISSES.length)];
+      stone.setAttribute('aria-label', 'Not here');
+      $('status').textContent = 'Boo! Not here!';
+    }
+  };
+  $('againBtn').addEventListener('click', newRound);
+  newRound();
+
+  // --- Share: native share sheet, else copy the link ---
+  $('shareBtn').addEventListener('click', async () => {
+    const msg = $('shareStatus');
+    const text = 'I just got ghosted 👻 Tap if you dare:';
+    if (navigator.share) {
+      try { await navigator.share({ title: "You've been ghosted!", text, url: URL_TO_SHARE }); return; }
+      catch (e) { if (e.name === 'AbortError') return; }
+    }
+    try {
+      await navigator.clipboard.writeText(`${text} ${URL_TO_SHARE}`);
+      msg.textContent = 'Link copied! Go ghost a friend 👻';
+    } catch {
+      msg.textContent = `Share this: ${URL_TO_SHARE}`;
+    }
+  });
+})();
+</script>
+</body>
+</html>

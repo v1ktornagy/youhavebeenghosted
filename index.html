@@ -9,167 +9,219 @@
 <meta property="og:description" content="Boo! Tap for spooky jokes and a pumpkin hunt.">
 <meta property="og:url" content="https://youhavebeenghosted.com/">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#2a1446">
+<meta name="theme-color" content="#1d0f33">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
 <style>
+  /* Chewy by Font Diner (Apache 2.0), subset to the display strings only */
+  @font-face {
+    font-family: "Chewy";
+    src: url(data:font/woff2;base64,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) format("woff2");
+    font-display: swap;
+  }
   :root {
-    --night: #2a1446;
-    --night-deep: #160a26;
-    --orange: #ff8a1f;
-    --orange-soft: #ffb566;
-    --ghost: #fdfbff;
-    --text: #fff6ec;
-    --card: rgba(255, 255, 255, .08);
-    --stone: #8d8aa3;
-    --stone-dark: #5f5c75;
+    --plum: #1d0f33;
+    --violet: #3b1d63;
+    --pumpkin: #ff7a18;
+    --pumpkin-deep: #b84f00;
+    --pumpkin-ink: #b34700;
+    --moon: #ffc46b;
+    --ghost: #fbf8ff;
+    --night: #0e0718;
+    --stone: #6f6790;
+    --stone-dark: #4a4366;
+    --display: "Chewy", "Comic Sans MS", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html { -webkit-text-size-adjust: 100%; background: var(--night); }
   body {
     margin: 0;
-    min-height: 100vh;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    color: var(--text);
-    background:
-      radial-gradient(circle at 80% 8%, var(--orange-soft) 0 34px, rgba(255,138,31,.25) 35px, transparent 120px),
-      radial-gradient(ellipse at 50% 120%, rgba(255,138,31,.45), transparent 60%),
-      linear-gradient(var(--night-deep), var(--night) 55%);
-    background-attachment: fixed;
-    overflow-x: hidden;
+    color: var(--ghost);
     text-align: center;
+    overflow-x: hidden;
   }
-  main { max-width: 440px; margin: 0 auto; padding: 24px 16px 32px; }
+  .wrap { max-width: 440px; margin: 0 auto; padding: 0 16px; }
 
-  .sky { position: relative; height: 210px; overflow: hidden; }
-  .bat { position: absolute; font-size: 28px; animation: flap 7s linear infinite; }
-  .bat:nth-child(1) { top: 10px; animation-delay: 0s; }
-  .bat:nth-child(2) { top: 60px; animation-delay: -2.5s; font-size: 22px; animation-duration: 9s; }
-  .bat:nth-child(3) { top: 120px; animation-delay: -5s; font-size: 18px; animation-duration: 11s; }
-  @keyframes flap {
-    0%   { transform: translate(-60px, 0) scaleX(-1); }
-    25%  { transform: translate(25vw, -14px) scaleX(-1); }
-    50%  { transform: translate(50vw, 8px) scaleX(-1); }
-    75%  { transform: translate(75vw, -10px) scaleX(-1); }
-    100% { transform: translate(110vw, 0) scaleX(-1); }
+  /* ---------- Sky ---------- */
+  .sky { background: linear-gradient(var(--plum), var(--violet) 85%); padding-top: 12px; }
+  .scene { position: relative; height: 240px; overflow: hidden; }
+  .moon {
+    position: absolute; left: 4px; top: 22px; width: 150px; height: 150px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #ffe2a8, var(--moon) 55%, #ff9f43);
+    box-shadow: 0 0 70px 10px rgba(255, 150, 60, .35);
   }
+  .bat { position: absolute; width: 46px; color: var(--night); animation: fly 9s linear infinite; }
+  .bat svg { display: block; width: 100%; animation: flap .28s ease-in-out infinite alternate; }
+  .bat.b1 { top: 40px; }
+  .bat.b2 { top: 110px; width: 34px; animation-duration: 12s; animation-delay: -4s; }
+  .bat.b3 { top: 70px; width: 26px; animation-duration: 15s; animation-delay: -10s; }
+  @keyframes fly {
+    0%   { transform: translate(-60px, 0); }
+    30%  { transform: translate(120px, -18px); }
+    60%  { transform: translate(260px, 10px); }
+    100% { transform: translate(480px, -8px); }
+  }
+  @keyframes flap { to { transform: scaleY(.45); } }
+
   .ghost-btn {
-    position: absolute; left: 50%; top: 20px; margin-left: -70px; margin-top: 10px;
-    width: 140px; background: none; border: 0; padding: 0; cursor: pointer;
-    animation: float 3.2s ease-in-out infinite;
+    position: absolute; left: 14px; top: 60px; width: 132px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    animation: float 3.4s ease-in-out infinite;
     -webkit-tap-highlight-color: transparent;
   }
-  .ghost-btn svg { width: 140px; height: auto; display: block; filter: drop-shadow(0 10px 18px rgba(0,0,0,.35)); }
+  .ghost-btn svg { display: block; width: 100%; filter: drop-shadow(0 12px 16px rgba(14, 7, 24, .45)); }
   .ghost-btn.wiggle svg { animation: wiggle .5s ease-in-out; }
-  @keyframes float { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-16px) rotate(3deg); } }
-  @keyframes wiggle { 0%,100% { transform: rotate(0); } 25% { transform: rotate(-12deg) scale(1.08); } 75% { transform: rotate(12deg) scale(1.08); } }
+  @keyframes float { 0%, 100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-14px) rotate(3deg); } }
+  @keyframes wiggle { 25% { transform: rotate(-12deg) scale(1.08); } 75% { transform: rotate(12deg) scale(1.08); } }
+
   .bubble {
-    position: absolute; right: -14px; top: -8px;
-    background: var(--ghost); color: var(--night); font-weight: 800;
-    padding: 4px 10px; border-radius: 14px; font-size: 15px;
-    opacity: 0; transition: opacity .2s;
+    position: absolute; left: 160px; right: 0; top: 34px;
+    background: var(--ghost); color: var(--plum);
+    border-radius: 22px; padding: 14px 16px;
+    font-size: 16px; line-height: 1.35; text-align: left;
+    box-shadow: 0 8px 0 rgba(14, 7, 24, .35);
   }
-  .bubble.show { opacity: 1; }
+  .bubble::before {
+    content: ""; position: absolute; left: -14px; top: 36px;
+    border: 9px solid transparent; border-right: 14px solid var(--ghost); border-left: 0;
+  }
+  .bubble .punch { display: block; margin-top: 6px; font-weight: 800; color: var(--pumpkin-ink); }
+  .bubble.pop { animation: pop .3s ease-out; }
 
-  h1 { font-size: clamp(30px, 9vw, 42px); line-height: 1.1; margin: 8px 0 10px; font-weight: 900; letter-spacing: -.5px; text-shadow: 0 3px 0 var(--night-deep); }
-  h1 .boo { color: var(--orange); display: block; font-size: 1.3em; }
-  .sub { font-size: 18px; margin: 0 0 28px; opacity: .92; }
+  .sound {
+    position: absolute; right: 0; top: 0; width: 44px; height: 44px; border-radius: 50%;
+    border: 2px solid rgba(251, 248, 255, .35); background: rgba(14, 7, 24, .35);
+    font-size: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .sound[aria-pressed="true"] { border-color: var(--pumpkin); background: rgba(255, 122, 24, .25); }
 
-  .card { background: var(--card); border-radius: 20px; padding: 18px 16px; margin: 0 0 18px; }
-  h2 { margin: 0 0 6px; font-size: 21px; }
-  .hint { margin: 0 0 14px; opacity: .8; font-size: 15px; }
+  h1 {
+    font-family: var(--display); font-weight: 400;
+    font-size: clamp(40px, 12vw, 54px); line-height: 1; letter-spacing: .5px;
+    margin: 4px 0 14px; color: var(--ghost);
+    text-shadow: 3px 4px 0 var(--pumpkin);
+  }
+  .sub { font-size: 18px; line-height: 1.4; margin: 0 0 22px; opacity: .9; }
 
-  button.big {
-    font: inherit; font-weight: 800; font-size: 18px;
-    background: var(--orange); color: var(--night-deep);
-    border: 0; border-radius: 999px; padding: 14px 22px; min-height: 52px;
-    width: 100%; cursor: pointer; box-shadow: 0 4px 0 #b85a00;
+  .btn {
+    font-family: var(--display); font-size: 24px; letter-spacing: .5px;
+    width: 100%; min-height: 56px; padding: 10px 20px; border: 0; border-radius: 999px;
+    background: var(--pumpkin); color: var(--night); cursor: pointer;
+    box-shadow: 0 5px 0 var(--pumpkin-deep);
     -webkit-tap-highlight-color: transparent;
   }
-  button.big:active { transform: translateY(3px); box-shadow: 0 1px 0 #b85a00; }
-  button.ghosty { background: var(--ghost); box-shadow: 0 4px 0 #b9b2cc; }
-  button.ghosty:active { box-shadow: 0 1px 0 #b9b2cc; }
-  button:focus-visible { outline: 3px solid var(--ghost); outline-offset: 3px; }
+  .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 var(--pumpkin-deep); }
+  .btn.quiet { background: var(--ghost); box-shadow: 0 5px 0 #b9b2cc; font-size: 21px; }
+  .btn.quiet:active { box-shadow: 0 1px 0 #b9b2cc; }
+  button:focus-visible { outline: 3px solid var(--moon); outline-offset: 4px; }
 
-  .joke { min-height: 3.2em; margin: 16px 4px 0; font-size: 18px; line-height: 1.4; }
-  .joke .punch { display: block; color: var(--orange-soft); font-weight: 800; margin-top: 6px; }
+  .hill { display: block; width: 100%; height: 70px; margin: 30px 0 -1px; }
 
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0 auto 14px; max-width: 300px; }
+  /* ---------- Graveyard ---------- */
+  .ground { background: var(--night); padding-bottom: 36px; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0 0 4px; color: var(--moon); }
+  .hint { margin: 0 0 22px; opacity: .8; font-size: 16px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px 14px; max-width: 300px; margin: 0 auto 16px; }
   .stone {
-    aspect-ratio: 4 / 5; border: 0; cursor: pointer; font-size: 34px; font-weight: 900;
-    color: var(--stone-dark); background: linear-gradient(var(--stone), var(--stone-dark));
-    border-radius: 50% 50% 10px 10px / 40% 40% 10px 10px;
-    box-shadow: inset 0 -6px 0 rgba(0,0,0,.2), 0 6px 0 #3b2a17;
+    aspect-ratio: 4 / 5; border: 0; cursor: pointer;
+    font: 800 30px system-ui, sans-serif; color: #d6d1e8;
+    background: linear-gradient(var(--stone), var(--stone-dark));
+    border-radius: 50% 50% 8px 8px / 42% 42% 8px 8px;
+    box-shadow: inset 0 -7px 0 rgba(14, 7, 24, .25), 0 7px 0 #2a1d3f;
     -webkit-tap-highlight-color: transparent;
   }
-  .stone:not(:disabled) { color: #d8d5e6; }
-  .stone:disabled { cursor: default; background: linear-gradient(#4b3a63, #3a2b50); }
-  .stone.found { background: radial-gradient(circle, rgba(255,138,31,.6), #3a2b50 70%); animation: pop .4s; }
-  @keyframes pop { 50% { transform: scale(1.18); } }
-  .status { min-height: 1.5em; font-size: 17px; font-weight: 700; margin: 0 0 12px; }
+  .stone:nth-child(3n + 1) { transform: rotate(-4deg); }
+  .stone:nth-child(3n) { transform: rotate(3deg); }
+  .stone:nth-child(5) { transform: rotate(-2deg) translateY(4px); }
+  .stone:disabled { cursor: default; background: linear-gradient(#2d2245, #221935); box-shadow: 0 7px 0 #1a1229; }
+  .stone.found { background: radial-gradient(circle, rgba(255, 122, 24, .7), #2d2245 72%); animation: pop .4s; }
+  @keyframes pop { 50% { scale: 1.12; } }
 
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .row button.big { font-size: 16px; padding: 12px 10px; }
+  .status { min-height: 1.5em; margin: 0 0 14px; font-size: 18px; font-weight: 700; }
+  .share { margin-top: 30px; }
+  #shareStatus { margin-top: 12px; }
 
-  footer { margin-top: 26px; font-size: 20px; font-weight: 800; }
-  footer .sig { display: block; font-size: 16px; font-weight: 600; opacity: .85; margin-top: 6px; }
+  footer { font-family: var(--display); font-size: 28px; color: var(--moon); margin-top: 26px; }
+  footer .sig { display: block; font-size: 22px; color: var(--ghost); opacity: .8; margin-top: 2px; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .bat:nth-child(1) { left: 12%; } .bat:nth-child(2) { left: 72%; } .bat:nth-child(3) { left: 30%; }
+    .bat.b1 { left: 120px; } .bat.b2 { left: 30px; } .bat.b3 { left: 90px; top: 160px; }
   }
 </style>
 </head>
 <body>
-<main>
-  <div class="sky">
-    <span class="bat" aria-hidden="true">🦇</span>
-    <span class="bat" aria-hidden="true">🦇</span>
-    <span class="bat" aria-hidden="true">🦇</span>
-    <button class="ghost-btn" id="ghost" type="button" aria-label="Poke the ghost">
-      <span class="bubble" id="bubble" aria-live="polite"></span>
-      <svg viewBox="0 0 140 160" aria-hidden="true">
-        <path d="M70 6C34 6 14 34 14 70v74c0 6 7 9 11 4l9-10 10 12c3 4 9 4 12 0l14-15 14 15c3 4 9 4 12 0l10-12 9 10c4 5 11 2 11-4V70C126 34 106 6 70 6z" fill="#fdfbff"/>
-        <ellipse cx="50" cy="66" rx="9" ry="12" fill="#2a1446"/>
-        <ellipse cx="90" cy="66" rx="9" ry="12" fill="#2a1446"/>
-        <circle cx="53" cy="61" r="3.5" fill="#fff"/>
-        <circle cx="93" cy="61" r="3.5" fill="#fff"/>
-        <ellipse cx="36" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
-        <ellipse cx="104" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
-        <path d="M56 88q14 18 28 0" fill="#2a1446"/>
-        <path d="M64 94q6 6 12 0q-2 6-6 6t-6-6z" fill="#ff7a9a"/>
-      </svg>
-    </button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bat" viewBox="0 0 64 30">
+    <path fill="currentColor" d="M32 9l-3-6 .5 6.5C26 9.5 23 6 17 6c2 3.5-3 5-7 3 0 4-5 5.5-10 4 6 3 10 7 12 12 2-3.5 6-4 9-2 1-3.5 5-4.5 8-2 1 1.5 2 3 3 5 1-2 2-3.5 3-5 3-2.5 7-1.5 8 2 3-2 7-1.5 9 2 2-5 6-9 12-12-5 1.5-10 0-10-4-4 2-9 .5-7-3-6 0-9 3.5-12.5 3.5L35 3z"/>
+  </symbol>
+</svg>
+
+<section class="sky">
+  <div class="wrap">
+    <div class="scene">
+      <div class="moon" aria-hidden="true"></div>
+      <span class="bat b1" aria-hidden="true"><svg viewBox="0 0 64 30"><use href="#bat"/></svg></span>
+      <span class="bat b2" aria-hidden="true"><svg viewBox="0 0 64 30"><use href="#bat"/></svg></span>
+      <span class="bat b3" aria-hidden="true"><svg viewBox="0 0 64 30"><use href="#bat"/></svg></span>
+      <button class="ghost-btn" id="ghost" type="button" aria-label="Poke the ghost">
+        <svg viewBox="0 0 140 160" aria-hidden="true">
+          <path d="M70 6C34 6 14 34 14 70v74c0 6 7 9 11 4l9-10 10 12c3 4 9 4 12 0l14-15 14 15c3 4 9 4 12 0l10-12 9 10c4 5 11 2 11-4V70C126 34 106 6 70 6z" fill="#fbf8ff"/>
+          <ellipse cx="50" cy="66" rx="9" ry="12" fill="#1d0f33"/>
+          <ellipse cx="90" cy="66" rx="9" ry="12" fill="#1d0f33"/>
+          <circle cx="53" cy="61" r="3.5" fill="#fff"/>
+          <circle cx="93" cy="61" r="3.5" fill="#fff"/>
+          <ellipse cx="36" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
+          <ellipse cx="104" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
+          <path d="M56 88q14 18 28 0" fill="#1d0f33"/>
+          <path d="M64 94q6 6 12 0q-2 6-6 6t-6-6z" fill="#ff7a9a"/>
+        </svg>
+      </button>
+      <p class="bubble" id="bubble" aria-live="polite">Psst! Want to hear a joke? Tap the orange button.</p>
+      <button class="sound" id="soundBtn" type="button" aria-pressed="false" aria-label="Spooky sound">🔇</button>
+    </div>
+
+    <h1>Boo!<br>You've been ghosted! 👻</h1>
+    <p class="sub">Don't worry, I'm still here. Happy Halloween!</p>
+    <button class="btn" id="jokeBtn" type="button">Tell me a spooky joke</button>
   </div>
+  <svg class="hill" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70V44C40 30 80 22 130 30s90 26 140 18 90-34 130-26v44z" fill="#0e0718"/>
+  </svg>
+</section>
 
-  <h1><span class="boo">Boo!</span> You've been ghosted! 👻</h1>
-  <p class="sub">Don't worry, I'm still here. Happy Halloween!</p>
-
-  <section class="card">
-    <button class="big" id="jokeBtn" type="button">Tell me a spooky joke</button>
-    <p class="joke" id="joke" aria-live="polite"></p>
-  </section>
-
-  <section class="card">
-    <h2>🎃 Pumpkin Hunt</h2>
-    <p class="hint">A pumpkin is hiding behind one gravestone. Can you find it?</p>
+<section class="ground">
+  <div class="wrap">
+    <h2>Pumpkin Hunt</h2>
+    <p class="hint">One gravestone hides a pumpkin. Tap to look behind them.</p>
     <div class="grid" id="grid"></div>
     <p class="status" id="status" aria-live="polite"></p>
-    <button class="big ghosty" id="againBtn" type="button" hidden>Play again</button>
-  </section>
+    <button class="btn quiet" id="againBtn" type="button" hidden>Play again</button>
 
-  <div class="row">
-    <button class="big ghosty" id="soundBtn" type="button" aria-pressed="false">🔊 Make it spooky</button>
-    <button class="big" id="shareBtn" type="button">📤 Share</button>
+    <button class="btn share" id="shareBtn" type="button">📤 Ghost a friend</button>
+    <p class="status" id="shareStatus" aria-live="polite"></p>
+
+    <footer>Trick or treat! 🎃<span class="sig">— Viktor</span></footer>
   </div>
-  <p class="status" id="shareStatus" aria-live="polite"></p>
-
-  <footer>Trick or treat! 🎃<span class="sig">— Viktor 👻</span></footer>
-</main>
+</section>
 
 <script>
 (() => {
   const $ = id => document.getElementById(id);
   const URL_TO_SHARE = 'https://youhavebeenghosted.com';
+  const bubble = $('bubble');
+
+  const say = (text, punch) => {
+    bubble.textContent = text;
+    if (punch) {
+      const p = document.createElement('span');
+      p.className = 'punch';
+      p.textContent = punch;
+      bubble.appendChild(p);
+    }
+    bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
+  };
 
   // --- Spooky Jokes: shuffled deck, no repeats until all have been shown ---
   const JOKES = [
@@ -196,18 +248,14 @@
     ["What did one ghost say to the other?", "\"Do you believe in people?\""],
   ];
   let deck = [];
+  let current = null;
   const nextJoke = () => {
     if (!deck.length) deck = JOKES.map((_, i) => i).sort(() => Math.random() - .5);
     return JOKES[deck.pop()];
   };
   $('jokeBtn').addEventListener('click', () => {
-    const [q, a] = nextJoke();
-    const el = $('joke');
-    el.textContent = q;
-    const punch = document.createElement('span');
-    punch.className = 'punch';
-    punch.textContent = a;
-    el.appendChild(punch);
+    current = nextJoke();
+    say(...current);
   });
 
   // --- Spooky Sound: synthesized wail, only after the visitor opts in ---
@@ -235,27 +283,29 @@
     osc.stop(t + 2); lfo.stop(t + 2);
   };
   $('soundBtn').addEventListener('click', () => {
+    const btn = $('soundBtn');
     const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!Ctx) { $('soundBtn').textContent = '🔇 No sound here'; return; }
+    if (!Ctx) { say('Sorry, this phone keeps me quiet.'); return; }
     if (!audio) audio = new Ctx();
     audio.resume();
     soundOn = !soundOn;
-    $('soundBtn').setAttribute('aria-pressed', String(soundOn));
-    $('soundBtn').textContent = soundOn ? '🔇 Shh, quiet' : '🔊 Make it spooky';
-    wail();
+    btn.setAttribute('aria-pressed', String(soundOn));
+    btn.textContent = soundOn ? '🔊' : '🔇';
+    if (soundOn) { say('wooOOOooo! 🎶'); wail(); } else { say('Shh… quiet ghost mode.'); }
   });
 
-  // --- Ghost poke ---
-  const LINES = ['Boo!', 'Hehe!', 'Eek!', 'Wooo!', 'Tickles!'];
-  let bubbleTimer;
+  // --- Ghost poke: a quick reaction, then back to whatever it was saying ---
+  const POKES = ['Boo!', 'Hehe, that tickles!', 'Eek!', 'Wooo!', 'Hey, I was floating!'];
+  let pokeTimer;
   $('ghost').addEventListener('click', () => {
-    const g = $('ghost'), b = $('bubble');
+    const g = $('ghost');
     g.classList.remove('wiggle'); void g.offsetWidth; g.classList.add('wiggle');
-    b.textContent = LINES[Math.floor(Math.random() * LINES.length)];
-    b.classList.add('show');
-    clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(() => b.classList.remove('show'), 1200);
+    say(POKES[Math.floor(Math.random() * POKES.length)]);
     wail();
+    clearTimeout(pokeTimer);
+    pokeTimer = setTimeout(() => current
+      ? say(...current)
+      : say('Psst! Want to hear a joke? Tap the orange button.'), 1600);
   });
 
   // --- Pumpkin Hunt ---
@@ -286,9 +336,7 @@
       stone.classList.add('found');
       stone.setAttribute('aria-label', 'Pumpkin!');
       $('grid').querySelectorAll('.stone').forEach(s => { s.disabled = true; });
-      $('status').textContent = taps === 1
-        ? 'WOW! First try! 🎉'
-        : `Found it in ${taps} taps! 🎉`;
+      $('status').textContent = taps === 1 ? 'WOW! First try! 🎉' : `Found it in ${taps} taps! 🎉`;
       $('againBtn').hidden = false;
       wail();
     } else {

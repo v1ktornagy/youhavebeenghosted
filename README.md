@@ -20,7 +20,7 @@ Now you've been ghosted. Don't worry, it's the friendly kind.
 
 One `index.html`. No frameworks, no images, no trackers, no external requests.
 The ghost is hand-drawn SVG, the wail is synthesized with the Web Audio API,
-and the whole thing is about 35 KB, so it loads fast on party Wi-Fi and cellular alike.
+and the whole thing is about 39 KB, so it loads fast on party Wi-Fi and cellular alike.
 It respects `prefers-reduced-motion`, so the ghost holds still if your phone asks it to.
 
 Hosted on GitHub Pages.

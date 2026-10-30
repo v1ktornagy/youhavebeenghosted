@@ -171,7 +171,7 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px;
   }
   .frame {
-    position: relative; width: 100%; max-width: 420px; aspect-ratio: 3 / 4; max-height: 62vh;
+    position: relative; width: 100%; max-width: 420px; aspect-ratio: 3 / 4; max-height: 56vh;
     overflow: hidden; border-radius: 18px; background: var(--plum); container-type: inline-size;
   }
   .frame video, .frame #shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -190,6 +190,21 @@
   @keyframes flash { to { opacity: 0; } }
   .booth .status { margin: 0; font-size: 16px; font-weight: 600; opacity: .9; }
   .booth-row { display: flex; gap: 12px; width: 100%; max-width: 420px; }
+  .booth-done { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 420px; }
+  .booth-done .btn { font-size: 21px; min-height: 50px; }
+  .social-label { margin: 2px 0 0; font-size: 15px; opacity: .8; }
+  .social { display: flex; gap: 10px; width: 100%; }
+  .social a {
+    flex: 1; padding: 10px 6px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 15px;
+    color: var(--ghost); border: 2px solid rgba(251, 248, 255, .35); background: rgba(251, 248, 255, .08);
+  }
+  .social a:active { background: rgba(251, 248, 255, .2); }
+  .social a:focus-visible { outline: 3px solid var(--moon); outline-offset: 3px; }
+  .retake {
+    position: absolute; top: 12px; left: 12px; height: 44px; padding: 0 16px; border-radius: 999px; z-index: 1;
+    border: 2px solid rgba(251, 248, 255, .35); background: rgba(14, 7, 24, .6); color: var(--ghost);
+    font: 700 16px system-ui, sans-serif; cursor: pointer;
+  }
   .booth label.btn { display: flex; align-items: center; justify-content: center; max-width: 420px; }
   .close {
     position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; z-index: 1;
@@ -306,9 +321,18 @@
   </div>
   <p class="status" id="boothStatus" aria-live="polite">Your photo stays on your phone.</p>
   <div class="booth-row" id="liveRow"><button class="btn" id="snapBtn" type="button">📸 Snap!</button></div>
-  <div class="booth-row" id="doneRow" hidden>
-    <button class="btn" id="keepBtn" type="button">Share</button>
-    <button class="btn quiet" id="retakeBtn" type="button">Retake</button>
+  <div class="booth-done" id="doneRow" hidden>
+    <button class="retake" id="retakeBtn" type="button">↺ Retake</button>
+    <div class="booth-row">
+      <button class="btn" id="keepBtn" type="button">📤 Share</button>
+      <button class="btn quiet" id="saveBtn" type="button">💾 Save</button>
+    </div>
+    <p class="social-label">Dare your friends:</p>
+    <div class="social">
+      <a id="waLink" target="_blank" rel="noopener">WhatsApp</a>
+      <a id="fbLink" target="_blank" rel="noopener">Facebook</a>
+      <a id="xLink" target="_blank" rel="noopener">X</a>
+    </div>
   </div>
   <label class="btn quiet" id="pickLabel" hidden>Open the camera app<input type="file" accept="image/*" capture="user" id="pick" hidden></label>
 </div>
@@ -710,8 +734,7 @@ const shareText = (name, taps) => {
     if (!photo) { boothMsg.textContent = "Hmm, that didn't work. Try again?"; return; }
     if (shot.src) URL.revokeObjectURL(shot.src);
     shot.src = URL.createObjectURL(photo);
-    const file = new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
-    $('keepBtn').textContent = navigator.canShare && navigator.canShare({ files: [file] }) ? '📤 Share' : '💾 Save';
+    $('keepBtn').hidden = !canSharePhoto();
     boothMsg.textContent = 'Boo! Looking spooky 👻';
     boothMode(true);
     frame.classList.remove('flash'); void frame.offsetWidth; frame.classList.add('flash');
@@ -745,18 +768,31 @@ const shareText = (name, taps) => {
     boothMode(false);
   });
 
-  $('keepBtn').addEventListener('click', async () => {
-    const file = new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      try { await navigator.share({ files: [file], text: `I just got ghosted 👻 ${URL_TO_SHARE}` }); return; }
-      catch (e) { if (e.name === 'AbortError') return; }
-    }
+  // The share sheet is the only way to hand the photo itself to Instagram, WhatsApp, Messages…
+  const photoFile = () => new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
+  const canSharePhoto = () => Boolean(navigator.canShare && navigator.canShare({ files: [photoFile()] }));
+  const savePhoto = () => {
     const a = document.createElement('a');
     a.href = shot.src;
     a.download = 'ghost-selfie.jpg';
     a.click();
     boothMsg.textContent = 'Saved! Or press and hold the photo to keep it.';
+  };
+  $('saveBtn').addEventListener('click', savePhoto);
+  $('keepBtn').addEventListener('click', async () => {
+    try {
+      await navigator.share({ files: [photoFile()], text: `${SELFIE_TEXT} ${URL_TO_SHARE}` });
+    } catch (e) {
+      if (e.name !== 'AbortError') savePhoto();
+    }
   });
+
+  // Social apps' web links can only carry text and a link, not the photo
+  const SELFIE_TEXT = 'I just got ghosted 👻 Take your own ghost selfie:';
+  const enc = encodeURIComponent;
+  $('waLink').href = `https://wa.me/?text=${enc(`${SELFIE_TEXT} ${URL_TO_SHARE}`)}`;
+  $('fbLink').href = `https://www.facebook.com/sharer/sharer.php?u=${enc(URL_TO_SHARE)}`;
+  $('xLink').href = `https://twitter.com/intent/tweet?text=${enc(SELFIE_TEXT)}&url=${enc(URL_TO_SHARE)}`;
 })();
 </script>
 </body>

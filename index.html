@@ -117,7 +117,7 @@
     text-shadow: 3px 4px 0 var(--pumpkin);
   }
   .sub { font-size: 18px; line-height: 1.4; margin: 0 0 16px; opacity: .9; }
-  .countdown { font-family: var(--display); font-size: 22px; color: var(--moon); margin: 0 0 22px; min-height: 1.2em; font-variant-numeric: tabular-nums; }
+  .countdown { font-family: var(--display); font-size: 22px; color: var(--moon); margin: 0 0 18px; min-height: 1.2em; font-variant-numeric: tabular-nums; }
   .countdown small { display: block; font: 15px system-ui, sans-serif; color: var(--ghost); opacity: .8; margin-bottom: 2px; }
   .btn.name { margin-top: 16px; }
 
@@ -133,7 +133,7 @@
   .btn.quiet:active { box-shadow: 0 1px 0 #b9b2cc; }
   button:focus-visible { outline: 3px solid var(--moon); outline-offset: 4px; }
 
-  .hill { display: block; width: 100%; height: 70px; margin: 30px 0 -1px; }
+  .hill { display: block; width: 100%; height: 70px; margin: 12px 0 -1px; }
 
   /* ---------- Graveyard ---------- */
   .ground { background: var(--night); padding-bottom: 36px; }
@@ -157,8 +157,9 @@
   @keyframes pop { 50% { scale: 1.12; } }
 
   .status { min-height: 1.5em; margin: 0 0 14px; font-size: 18px; font-weight: 700; }
+  /* Rises into the hill (same fill) so its glow peeks above the fold */
   .selfie-card {
-    margin: 0 0 40px; padding: 24px 18px 26px; border-radius: 24px;
+    position: relative; margin: -24px 0 40px; padding: 24px 18px 26px; border-radius: 24px;
     background: radial-gradient(120% 90% at 50% 0, rgba(255, 122, 24, .28), rgba(59, 29, 99, .5) 70%);
     border: 2px solid rgba(255, 196, 107, .45);
     box-shadow: 0 0 28px rgba(255, 122, 24, .25);

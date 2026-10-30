@@ -192,19 +192,8 @@
   .booth-row { display: flex; gap: 12px; width: 100%; max-width: 420px; }
   .booth-done { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; max-width: 420px; }
   .booth-done .btn { font-size: 21px; min-height: 50px; }
-  .social-label { margin: 2px 0 0; font-size: 15px; opacity: .8; }
-  .social { display: flex; gap: 10px; width: 100%; }
-  .social a {
-    flex: 1; padding: 10px 6px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 15px;
-    color: var(--ghost); border: 2px solid rgba(251, 248, 255, .35); background: rgba(251, 248, 255, .08);
-  }
-  .social a:active { background: rgba(251, 248, 255, .2); }
-  .social a:focus-visible { outline: 3px solid var(--moon); outline-offset: 3px; }
-  .retake {
-    position: absolute; top: 12px; left: 12px; height: 44px; padding: 0 16px; border-radius: 999px; z-index: 1;
-    border: 2px solid rgba(251, 248, 255, .35); background: rgba(14, 7, 24, .6); color: var(--ghost);
-    font: 700 16px system-ui, sans-serif; cursor: pointer;
-  }
+  .booth-done .share-photo { font-size: 24px; min-height: 64px; }
+  .share-photo small { display: block; font: 600 13px system-ui, sans-serif; opacity: .75; margin-top: 2px; }
   .booth label.btn { display: flex; align-items: center; justify-content: center; max-width: 420px; }
   .close {
     position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; z-index: 1;
@@ -322,16 +311,10 @@
   <p class="status" id="boothStatus" aria-live="polite">Your photo stays on your phone.</p>
   <div class="booth-row" id="liveRow"><button class="btn" id="snapBtn" type="button">📸 Snap!</button></div>
   <div class="booth-done" id="doneRow" hidden>
-    <button class="retake" id="retakeBtn" type="button">↺ Retake</button>
+    <button class="btn share-photo" id="keepBtn" type="button">📤 Share photo<small>WhatsApp · Instagram · Facebook · Messages…</small></button>
     <div class="booth-row">
-      <button class="btn" id="keepBtn" type="button">📤 Share</button>
       <button class="btn quiet" id="saveBtn" type="button">💾 Save</button>
-    </div>
-    <p class="social-label">Dare your friends:</p>
-    <div class="social">
-      <a id="waLink" target="_blank" rel="noopener">WhatsApp</a>
-      <a id="fbLink" target="_blank" rel="noopener">Facebook</a>
-      <a id="xLink" target="_blank" rel="noopener">X</a>
+      <button class="btn quiet" id="retakeBtn" type="button">↺ Retake</button>
     </div>
   </div>
   <label class="btn quiet" id="pickLabel" hidden>Open the camera app<input type="file" accept="image/*" capture="user" id="pick" hidden></label>
@@ -734,8 +717,9 @@ const shareText = (name, taps) => {
     if (!photo) { boothMsg.textContent = "Hmm, that didn't work. Try again?"; return; }
     if (shot.src) URL.revokeObjectURL(shot.src);
     shot.src = URL.createObjectURL(photo);
-    $('keepBtn').hidden = !canSharePhoto();
-    boothMsg.textContent = 'Boo! Looking spooky 👻';
+    const shareable = canSharePhoto();
+    $('keepBtn').hidden = !shareable;
+    boothMsg.textContent = shareable ? 'Boo! Looking spooky 👻' : 'Boo! Save it, then post it anywhere 👻';
     boothMode(true);
     frame.classList.remove('flash'); void frame.offsetWidth; frame.classList.add('flash');
     wail();
@@ -769,6 +753,8 @@ const shareText = (name, taps) => {
   });
 
   // The share sheet is the only way to hand the photo itself to Instagram, WhatsApp, Messages…
+  // (apps' web share links can only carry text, so there are no per-app buttons)
+  const SELFIE_TEXT = 'I just got ghosted 👻 Take your own ghost selfie:';
   const photoFile = () => new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
   const canSharePhoto = () => Boolean(navigator.canShare && navigator.canShare({ files: [photoFile()] }));
   const savePhoto = () => {
@@ -786,13 +772,6 @@ const shareText = (name, taps) => {
       if (e.name !== 'AbortError') savePhoto();
     }
   });
-
-  // Social apps' web links can only carry text and a link, not the photo
-  const SELFIE_TEXT = 'I just got ghosted 👻 Take your own ghost selfie:';
-  const enc = encodeURIComponent;
-  $('waLink').href = `https://wa.me/?text=${enc(`${SELFIE_TEXT} ${URL_TO_SHARE}`)}`;
-  $('fbLink').href = `https://www.facebook.com/sharer/sharer.php?u=${enc(URL_TO_SHARE)}`;
-  $('xLink').href = `https://twitter.com/intent/tweet?text=${enc(SELFIE_TEXT)}&url=${enc(URL_TO_SHARE)}`;
 })();
 </script>
 </body>

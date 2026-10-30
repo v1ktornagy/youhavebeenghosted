@@ -194,6 +194,14 @@
   .booth-done .btn { font-size: 21px; min-height: 50px; }
   .booth-done .share-photo { font-size: 24px; min-height: 64px; }
   .share-photo small { display: block; font: 600 13px system-ui, sans-serif; opacity: .75; margin-top: 2px; }
+  .social-label { margin: 2px 0 0; font-size: 15px; opacity: .8; }
+  .social { display: flex; gap: 10px; width: 100%; }
+  .social a {
+    flex: 1; padding: 12px 6px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 16px;
+    color: var(--ghost); border: 2px solid rgba(251, 248, 255, .35); background: rgba(251, 248, 255, .08);
+  }
+  .social a:active { background: rgba(251, 248, 255, .2); }
+  .social a:focus-visible { outline: 3px solid var(--moon); outline-offset: 3px; }
   .booth label.btn { display: flex; align-items: center; justify-content: center; max-width: 420px; }
   .close {
     position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; z-index: 1;
@@ -315,6 +323,14 @@
     <div class="booth-row">
       <button class="btn quiet" id="saveBtn" type="button">💾 Save</button>
       <button class="btn quiet" id="retakeBtn" type="button">↺ Retake</button>
+    </div>
+    <div class="booth-done" id="socialRow" hidden>
+      <p class="social-label">Dare your friends:</p>
+      <div class="social">
+        <a id="waLink" target="_blank" rel="noopener">WhatsApp</a>
+        <a id="fbLink" target="_blank" rel="noopener">Facebook</a>
+        <a id="xLink" target="_blank" rel="noopener">X</a>
+      </div>
     </div>
   </div>
   <label class="btn quiet" id="pickLabel" hidden>Open the camera app<input type="file" accept="image/*" capture="user" id="pick" hidden></label>
@@ -719,6 +735,7 @@ const shareText = (name, taps) => {
     shot.src = URL.createObjectURL(photo);
     const shareable = canSharePhoto();
     $('keepBtn').hidden = !shareable;
+    $('socialRow').hidden = shareable;
     boothMsg.textContent = shareable ? 'Boo! Looking spooky 👻' : 'Boo! Save it, then post it anywhere 👻';
     boothMode(true);
     frame.classList.remove('flash'); void frame.offsetWidth; frame.classList.add('flash');
@@ -753,8 +770,12 @@ const shareText = (name, taps) => {
   });
 
   // The share sheet is the only way to hand the photo itself to Instagram, WhatsApp, Messages…
-  // (apps' web share links can only carry text, so there are no per-app buttons)
+  // Browsers that can't share files (Firefox, in-app browsers) get apps' web links, which carry only text
   const SELFIE_TEXT = 'I just got ghosted 👻 Take your own ghost selfie:';
+  const enc = encodeURIComponent;
+  $('waLink').href = `https://wa.me/?text=${enc(`${SELFIE_TEXT} ${URL_TO_SHARE}`)}`;
+  $('fbLink').href = `https://www.facebook.com/sharer/sharer.php?u=${enc(URL_TO_SHARE)}`;
+  $('xLink').href = `https://twitter.com/intent/tweet?text=${enc(SELFIE_TEXT)}&url=${enc(URL_TO_SHARE)}`;
   const photoFile = () => new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
   const canSharePhoto = () => Boolean(navigator.canShare && navigator.canShare({ files: [photoFile()] }));
   const savePhoto = () => {

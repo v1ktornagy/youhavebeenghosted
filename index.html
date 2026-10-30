@@ -327,7 +327,7 @@ const shareText = (name, taps) => {
   let jokeCount = 0, ghosting = false, ghostedOnce = false;
   $('jokeBtn').addEventListener('click', () => {
     if (ghosting) return;
-    if (++jokeCount === 7 && !ghostedOnce) {
+    if (++jokeCount === 3 && !ghostedOnce) {
       ghosting = ghostedOnce = true;
       clearTimeout(pokeTimer);
       say("Okay, that's enough jokes. I'm ghosting you now.");

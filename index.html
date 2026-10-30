@@ -201,7 +201,7 @@
   .booth-done .share-photo { font-size: 24px; min-height: 64px; }
   .share-photo small { display: block; font: 600 13px system-ui, sans-serif; opacity: .75; margin-top: 2px; }
   .social-label { margin: 2px 0 0; font-size: 15px; opacity: .8; }
-  .social { display: flex; gap: 10px; width: 100%; }
+  .social { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
   .social a {
     flex: 1; padding: 12px 6px; border-radius: 999px; text-decoration: none; font-weight: 700; font-size: 16px;
     color: var(--ghost); border: 2px solid rgba(251, 248, 255, .35); background: rgba(251, 248, 255, .08);
@@ -334,6 +334,7 @@
     <div class="booth-done" id="socialRow" hidden>
       <p class="social-label">Dare your friends:</p>
       <div class="social">
+        <a id="igLink" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
         <a id="waLink" target="_blank" rel="noopener">WhatsApp</a>
         <a id="fbLink" target="_blank" rel="noopener">Facebook</a>
         <a id="xLink" target="_blank" rel="noopener">X</a>
@@ -769,6 +770,11 @@ const passwordFor = now => {
     boothMsg.textContent = 'Saved! Or press and hold the photo to keep it.';
   };
   $('saveBtn').addEventListener('click', savePhoto);
+  // Instagram takes no photo from web pages, so save it first and let the link open the app
+  $('igLink').addEventListener('click', () => {
+    savePhoto();
+    boothMsg.textContent = 'Saved! Now pick it from your gallery in Instagram 📸';
+  });
   $('keepBtn').addEventListener('click', async () => {
     try {
       await navigator.share({ files: [photoFile()], text: `${SELFIE_TEXT} ${URL_TO_SHARE}` });

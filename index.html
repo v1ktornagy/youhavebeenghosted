@@ -4,11 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>👻 You've been ghosted!</title>
-<meta name="description" content="Boo! Tap for spooky jokes and a pumpkin hunt.">
+<meta name="description" content="Boo! Take a ghost selfie, hear a spooky joke and hunt for the hidden pumpkin.">
 <meta property="og:title" content="👻 You've been ghosted!">
-<meta property="og:description" content="Boo! Tap for spooky jokes and a pumpkin hunt.">
+<meta property="og:description" content="Boo! Take a ghost selfie, hear a spooky joke and hunt for the hidden pumpkin.">
 <meta property="og:url" content="https://youhavebeenghosted.com/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://youhavebeenghosted.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A cute ghost in front of the moon: Boo! You've been ghosted!">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1d0f33">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👻</text></svg>">
 <style>
@@ -657,7 +662,11 @@ const passwordFor = now => {
       cam.srcObject = stream;
       await cam.play();
     } catch (e) {
-      usePicker(e.name === 'NotAllowedError' ? 'Camera blocked 🙈 Try this instead:' : "Couldn't open the camera. Try this instead:");
+      const why = {
+        NotAllowedError: 'Camera blocked 🙈 Try this instead:',
+        NotReadableError: 'Camera busy 👻 Close other tabs or apps using it, or try this:',
+      };
+      usePicker(why[e.name] || "Couldn't open the camera. Try this instead:");
     }
   });
 

@@ -13,16 +13,18 @@ Now you've been ghosted. Don't worry, it's the friendly kind.
 - 🎃 **Pumpkin Hunt**: a pumpkin is hiding behind one of nine gravestones. How fast can you find it?
 - ⏳ A live countdown to Halloween, all year round
 - 🔊 An optional ghostly "wooOOOooo", made right in your browser (no sound until you ask for it)
+- 📸 **Ghost selfie**: snap a photo with the ghost peeking in, then share or save it (it never leaves your phone)
 - 📤 **Ghost a friend**: share your ghost name and your pumpkin score, and dare them to beat it
+- 😴 After Halloween the ghost puts on a nightcap and goes back to sleep until October (preview it with `?sleepy`)
 - 🤫 A secret password for the party, and a secret on the page you'll have to find yourself
 
 ## How it's built
 
 One `index.html`. No frameworks, no images, no trackers, no external requests.
 The ghost is hand-drawn SVG, the wail is synthesized with the Web Audio API,
-and the whole thing is about 39 KB, so it loads fast on party Wi-Fi and cellular alike.
+and the whole thing is about 50 KB, so it loads fast on party Wi-Fi and cellular alike.
 It respects `prefers-reduced-motion`, so the ghost holds still if your phone asks it to.
 
-Hosted on GitHub Pages.
+Hosted on GitHub Pages. `print.html` is the letter-size QR sign for the wearable (print at 100% scale).
 
 Trick or treat! 🎃

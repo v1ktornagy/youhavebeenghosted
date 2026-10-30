@@ -152,7 +152,50 @@
   @keyframes pop { 50% { scale: 1.12; } }
 
   .status { min-height: 1.5em; margin: 0 0 14px; font-size: 18px; font-weight: 700; }
-  .share { margin-top: 30px; }
+  .selfie { margin-top: 30px; }
+  .share { margin-top: 16px; }
+  [hidden] { display: none !important; }
+
+  /* ---------- Sleepy season ---------- */
+  .zzz { display: none; position: absolute; left: 126px; top: 44px; pointer-events: none; font-family: var(--display); color: var(--ghost); }
+  .sleepy .zzz { display: block; }
+  .zzz span { position: absolute; left: 0; top: 0; font-size: 18px; opacity: 0; animation: zzz 3.6s ease-out infinite; }
+  .zzz span:nth-child(2) { font-size: 22px; animation-delay: 1.2s; }
+  .zzz span:nth-child(3) { font-size: 28px; animation-delay: 2.4s; }
+  @keyframes zzz { 0% { opacity: 0; transform: translate(0, 10px); } 25% { opacity: .9; } 100% { opacity: 0; transform: translate(22px, -36px); } }
+  .sleepy .ghost-btn { animation-duration: 6s; }
+
+  /* ---------- Ghost selfie booth ---------- */
+  .booth {
+    position: fixed; inset: 0; z-index: 10; background: var(--night);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 16px;
+  }
+  .frame {
+    position: relative; width: 100%; max-width: 420px; aspect-ratio: 3 / 4; max-height: 62vh;
+    overflow: hidden; border-radius: 18px; background: var(--plum); container-type: inline-size;
+  }
+  .frame video, .frame #shot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .frame video { transform: scaleX(-1); }
+  /* Keep in sync with PEEK in the script, so the photo matches the preview */
+  .peek { position: absolute; width: 42%; right: -6%; bottom: 15%; transform: rotate(-12deg); pointer-events: none; }
+  .caption {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 17%; margin: 0;
+    display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 2.5cqw;
+    background: linear-gradient(rgba(29, 15, 51, 0), rgba(29, 15, 51, .85) 45%);
+    font: 8.5cqw/1 var(--display); text-shadow: .6cqw .8cqw 0 var(--pumpkin);
+  }
+  .caption small { font: 600 4cqw system-ui, sans-serif; color: var(--moon); text-shadow: none; margin-top: 1.5cqw; }
+  .frame.done .peek, .frame.done .caption { display: none; }
+  .frame.flash::after { content: ""; position: absolute; inset: 0; background: #fff; animation: flash .4s forwards; }
+  @keyframes flash { to { opacity: 0; } }
+  .booth .status { margin: 0; font-size: 16px; font-weight: 600; opacity: .9; }
+  .booth-row { display: flex; gap: 12px; width: 100%; max-width: 420px; }
+  .booth label.btn { display: flex; align-items: center; justify-content: center; max-width: 420px; }
+  .close {
+    position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border-radius: 50%; z-index: 1;
+    border: 2px solid rgba(251, 248, 255, .35); background: rgba(14, 7, 24, .6); color: var(--ghost);
+    font-size: 20px; cursor: pointer;
+  }
   #shareStatus { margin-top: 12px; }
 
   .note {
@@ -192,16 +235,30 @@
       <button class="ghost-btn" id="ghost" type="button" aria-label="Poke the ghost">
         <svg viewBox="0 0 140 160" aria-hidden="true">
           <path d="M70 6C34 6 14 34 14 70v74c0 6 7 9 11 4l9-10 10 12c3 4 9 4 12 0l14-15 14 15c3 4 9 4 12 0l10-12 9 10c4 5 11 2 11-4V70C126 34 106 6 70 6z" fill="#fbf8ff"/>
-          <ellipse cx="50" cy="66" rx="9" ry="12" fill="#1d0f33"/>
-          <ellipse cx="90" cy="66" rx="9" ry="12" fill="#1d0f33"/>
-          <circle cx="53" cy="61" r="3.5" fill="#fff"/>
-          <circle cx="93" cy="61" r="3.5" fill="#fff"/>
           <ellipse cx="36" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
           <ellipse cx="104" cy="86" rx="9" ry="5" fill="#ffb3c7"/>
-          <path d="M56 88q14 18 28 0" fill="#1d0f33"/>
-          <path d="M64 94q6 6 12 0q-2 6-6 6t-6-6z" fill="#ff7a9a"/>
+          <g id="awake">
+            <ellipse cx="50" cy="66" rx="9" ry="12" fill="#1d0f33"/>
+            <ellipse cx="90" cy="66" rx="9" ry="12" fill="#1d0f33"/>
+            <circle cx="53" cy="61" r="3.5" fill="#fff"/>
+            <circle cx="93" cy="61" r="3.5" fill="#fff"/>
+            <path d="M56 88q14 18 28 0" fill="#1d0f33"/>
+            <path d="M64 94q6 6 12 0q-2 6-6 6t-6-6z" fill="#ff7a9a"/>
+          </g>
+          <!-- display attributes (not CSS) so the selfie copy of this SVG matches -->
+          <g id="asleep" display="none">
+            <path d="M40 66q10 8 20 0M80 66q10 8 20 0" stroke="#1d0f33" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <ellipse cx="70" cy="94" rx="6" ry="5" fill="#1d0f33"/>
+          </g>
+          <g id="nightcap" display="none">
+            <path d="M24 40C28 6 90-6 110 14c8 8 13 18 14 28-6-7-12-10-17-9 2 3 3 6 3 8z" fill="#6a4bc4"/>
+            <circle cx="52" cy="20" r="3" fill="#ffc46b"/><circle cx="80" cy="12" r="2.5" fill="#ffc46b"/><circle cx="98" cy="26" r="2" fill="#ffc46b"/>
+            <path d="M22 42Q66 22 112 40" stroke="#d9ccff" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <circle cx="124" cy="46" r="9" fill="#ffc46b"/>
+          </g>
         </svg>
       </button>
+      <span class="zzz" aria-hidden="true"><span>z</span><span>z</span><span>Z</span></span>
       <p class="bubble" id="bubble" aria-live="polite">Psst! Want to hear a joke? Tap the orange button.</p>
       <button class="sound" id="soundBtn" type="button" aria-pressed="false" aria-label="Spooky sound">🔇</button>
     </div>
@@ -225,6 +282,7 @@
     <p class="status" id="status" aria-live="polite"></p>
     <button class="btn quiet" id="againBtn" type="button" hidden>Play again</button>
 
+    <button class="btn quiet selfie" id="selfieBtn" type="button">📸 Take a ghost selfie</button>
     <button class="btn share" id="shareBtn" type="button">📤 Ghost a friend</button>
     <p class="status" id="shareStatus" aria-live="polite"></p>
 
@@ -237,6 +295,23 @@
     <footer>Trick or treat! 🎃<span class="sig">— Viktor</span></footer>
   </div>
 </section>
+
+<div class="booth" id="booth" role="dialog" aria-modal="true" aria-label="Ghost selfie" hidden>
+  <button class="close" id="closeBooth" type="button" aria-label="Close">✕</button>
+  <div class="frame" id="frame">
+    <video id="cam" playsinline muted autoplay></video>
+    <img id="shot" alt="Your ghost selfie" hidden>
+    <img class="peek" id="peek" alt="">
+    <p class="caption" aria-hidden="true">👻 You've been ghosted!<small>youhavebeenghosted.com</small></p>
+  </div>
+  <p class="status" id="boothStatus" aria-live="polite">Your photo stays on your phone.</p>
+  <div class="booth-row" id="liveRow"><button class="btn" id="snapBtn" type="button">📸 Snap!</button></div>
+  <div class="booth-row" id="doneRow" hidden>
+    <button class="btn" id="keepBtn" type="button">Share</button>
+    <button class="btn quiet" id="retakeBtn" type="button">Retake</button>
+  </div>
+  <label class="btn quiet" id="pickLabel" hidden>Open the camera app<input type="file" accept="image/*" capture="user" id="pick" hidden></label>
+</div>
 
 <script>
 // pure:start (logic with no DOM access, checked by test.mjs)
@@ -252,8 +327,21 @@ const halloweenStatus = now => {
   const days = Math.floor(s / 86400);
   const clock = `${days} day${days === 1 ? '' : 's'}, ${pad(Math.floor(s % 86400 / 3600))}:${pad(Math.floor(s % 3600 / 60))}:${pad(s % 60)}`;
   return m >= 10
-    ? { lead: "Halloween's over… or is it? 👻", line: `Next one in ${clock}` }
+    ? { lead: "Halloween's over 😴", line: `Next one in ${clock}` }
     : { lead: '', line: `🎃 Halloween in ${clock}` };
+};
+
+// The ghost sleeps from the morning after Halloween (6am, so the party can finish) until October
+const isSleepy = now => {
+  const m = now.getMonth();
+  return m < 9 || m === 11 || (m === 10 && (now.getDate() > 1 || now.getHours() >= 6));
+};
+
+// Largest centered crop of a w×h source with the given width/height ratio (like object-fit: cover)
+const coverCrop = (w, h, ratio) => {
+  const sw = Math.round(Math.min(w, h * ratio));
+  const sh = Math.round(Math.min(h, w / ratio));
+  return { sx: Math.round((w - sw) / 2), sy: Math.round((h - sh) / 2), sw, sh };
 };
 
 // Same password for everyone all night: a "night" runs 6am to 6am, so it doesn't flip at midnight mid-party
@@ -290,6 +378,17 @@ const shareText = (name, taps) => {
     bubble.classList.remove('pop'); void bubble.offsetWidth; bubble.classList.add('pop');
   };
 
+  // --- Sleepy season: nightcap on, eyes shut, no party password. ?sleepy previews it ---
+  const sleepy = isSleepy(new Date()) || new URLSearchParams(location.search).has('sleepy');
+  if (sleepy) {
+    document.body.classList.add('sleepy');
+    $('awake').setAttribute('display', 'none');
+    $('asleep').removeAttribute('display');
+    $('nightcap').removeAttribute('display');
+    document.querySelector('.sub').textContent = "I'm going back to sleep. Wake me up next Halloween!";
+    document.querySelector('.note').hidden = true;
+  }
+
   // --- Spooky Jokes: shuffled deck, no repeats until all have been shown ---
   const JOKES = [
     ["Why didn't the skeleton go to the party?", "He had no body to go with."],
@@ -317,8 +416,11 @@ const shareText = (name, taps) => {
   let pokeTimer;
   let deck = [];
   let current = null;
-  const INTRO = 'Psst! Want to hear a joke? Tap the orange button.';
-  const sayCurrent = () => current ? say(...current) : say(INTRO);
+  const INTRO = sleepy
+    ? ['Zzz… 😴', 'Tap the orange button if you really must.']
+    : ['Psst! Want to hear a joke? Tap the orange button.'];
+  const sayCurrent = () => say(...(current || INTRO));
+  if (sleepy) sayCurrent();
   const nextJoke = () => {
     if (!deck.length) deck = JOKES.map((_, i) => i).sort(() => Math.random() - .5);
     return JOKES[deck.pop()];
@@ -417,7 +519,9 @@ const shareText = (name, taps) => {
   });
 
   // --- Ghost poke: a quick reaction, then back to whatever it was saying ---
-  const POKES = ['Boo!', 'Hehe, that tickles!', 'Eek!', 'Wooo!', 'Hey, I was floating!'];
+  const POKES = sleepy
+    ? ['Zzz…', 'Five more minutes…', 'Mmm… candy…', '*snore*', 'Is it Halloween yet?']
+    : ['Boo!', 'Hehe, that tickles!', 'Eek!', 'Wooo!', 'Hey, I was floating!'];
 
   $('ghost').addEventListener('click', () => {
     const g = $('ghost');
@@ -498,6 +602,160 @@ const shareText = (name, taps) => {
     } catch {
       msg.textContent = `Share this: ${URL_TO_SHARE}`;
     }
+  });
+
+  // --- Ghost selfie: live camera with the ghost peeking in, everything stays on the phone ---
+  const PEEK = { width: .42, right: -.06, bottom: .15, turn: -12 * Math.PI / 180 }; // matches .peek in CSS
+  const booth = $('booth'), frame = $('frame'), cam = $('cam'), shot = $('shot'), boothMsg = $('boothStatus');
+  let stream = null, photo = null, usingPicker = false;
+  const ghostImg = new Image();
+
+  const boothMode = done => {
+    frame.classList.toggle('done', done);
+    shot.hidden = !done;
+    cam.hidden = done || usingPicker;
+    $('doneRow').hidden = !done;
+    $('liveRow').hidden = done || usingPicker;
+    $('pickLabel').hidden = done || !usingPicker;
+  };
+  const stopCamera = () => {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    stream = null;
+    cam.srcObject = null;
+  };
+  const usePicker = text => {
+    stopCamera();
+    usingPicker = true;
+    boothMsg.textContent = text;
+    boothMode(false);
+  };
+
+  $('selfieBtn').addEventListener('click', async () => {
+    // Snapshot the ghost as it looks right now (nightcap and all)
+    const svg = $('ghost').querySelector('svg').cloneNode(true);
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.setAttribute('width', '140');
+    svg.setAttribute('height', '160');
+    ghostImg.src = $('peek').src = `data:image/svg+xml,${encodeURIComponent(svg.outerHTML)}`;
+    usingPicker = false;
+    boothMsg.textContent = 'Your photo stays on your phone.';
+    boothMode(false);
+    booth.hidden = false;
+    document.body.style.overflow = 'hidden';
+    $('closeBooth').focus();
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      usePicker('No live camera here, but this works too:');
+      return;
+    }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+      if (booth.hidden) { stopCamera(); return; } // closed while the permission prompt was up
+      cam.srcObject = stream;
+      await cam.play();
+    } catch (e) {
+      usePicker(e.name === 'NotAllowedError' ? 'Camera blocked 🙈 Try this instead:' : "Couldn't open the camera. Try this instead:");
+    }
+  });
+
+  const closeBooth = () => {
+    stopCamera();
+    booth.hidden = true;
+    document.body.style.overflow = '';
+    $('selfieBtn').focus();
+  };
+  $('closeBooth').addEventListener('click', closeBooth);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !booth.hidden) closeBooth(); });
+
+  // Draw the photo cropped exactly like the preview, then the ghost and the caption on top
+  const compose = async (src, w, h, mirror) => {
+    const { sx, sy, sw, sh } = coverCrop(w, h, frame.clientWidth / frame.clientHeight);
+    const scale = Math.min(1, 1080 / sw);
+    const W = Math.round(sw * scale), H = Math.round(sh * scale);
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    ctx.save();
+    if (mirror) { ctx.translate(W, 0); ctx.scale(-1, 1); }
+    ctx.drawImage(src, sx, sy, sw, sh, 0, 0, W, H);
+    ctx.restore();
+
+    await ghostImg.decode().catch(() => {});
+    const gw = W * PEEK.width, gh = gw * 160 / 140;
+    ctx.save();
+    ctx.translate(W * (1 - PEEK.right) - gw / 2, H * (1 - PEEK.bottom) - gh / 2);
+    ctx.rotate(PEEK.turn);
+    ctx.drawImage(ghostImg, -gw / 2, -gh / 2, gw, gh);
+    ctx.restore();
+
+    const band = H * .17;
+    const fade = ctx.createLinearGradient(0, H - band, 0, H);
+    fade.addColorStop(0, 'rgba(29, 15, 51, 0)');
+    fade.addColorStop(.45, 'rgba(29, 15, 51, .85)');
+    fade.addColorStop(1, 'rgba(29, 15, 51, .85)');
+    ctx.fillStyle = fade;
+    ctx.fillRect(0, H - band, W, band);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = `600 ${Math.round(W * .04)}px system-ui, sans-serif`;
+    ctx.fillStyle = '#ffc46b';
+    ctx.fillText('youhavebeenghosted.com', W / 2, H - W * .03);
+    ctx.font = `${Math.round(W * .085)}px Chewy, system-ui, sans-serif`;
+    ctx.shadowColor = '#ff7a18';
+    ctx.shadowOffsetX = W * .006;
+    ctx.shadowOffsetY = W * .008;
+    ctx.fillStyle = '#fbf8ff';
+    ctx.fillText("👻 You've been ghosted!", W / 2, H - W * .09);
+
+    photo = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', .9));
+    if (!photo) { boothMsg.textContent = "Hmm, that didn't work. Try again?"; return; }
+    if (shot.src) URL.revokeObjectURL(shot.src);
+    shot.src = URL.createObjectURL(photo);
+    const file = new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
+    $('keepBtn').textContent = navigator.canShare && navigator.canShare({ files: [file] }) ? '📤 Share' : '💾 Save';
+    boothMsg.textContent = 'Boo! Looking spooky 👻';
+    boothMode(true);
+    frame.classList.remove('flash'); void frame.offsetWidth; frame.classList.add('flash');
+    wail();
+  };
+
+  $('snapBtn').addEventListener('click', () => {
+    if (cam.readyState < 2) { boothMsg.textContent = 'Hold on, the camera is waking up…'; return; }
+    compose(cam, cam.videoWidth, cam.videoHeight, true);
+  });
+
+  $('pick').addEventListener('change', async e => {
+    const f = e.target.files[0];
+    e.target.value = '';
+    if (!f) return;
+    const img = new Image();
+    img.src = URL.createObjectURL(f);
+    try {
+      await img.decode();
+      await compose(img, img.naturalWidth, img.naturalHeight, false);
+    } catch {
+      boothMsg.textContent = "Couldn't read that photo. Try another?";
+    } finally {
+      URL.revokeObjectURL(img.src);
+    }
+  });
+
+  $('retakeBtn').addEventListener('click', () => {
+    if (usingPicker) { $('pick').click(); return; }
+    boothMsg.textContent = 'Your photo stays on your phone.';
+    boothMode(false);
+  });
+
+  $('keepBtn').addEventListener('click', async () => {
+    const file = new File([photo], 'ghost-selfie.jpg', { type: 'image/jpeg' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try { await navigator.share({ files: [file], text: `I just got ghosted 👻 ${URL_TO_SHARE}` }); return; }
+      catch (e) { if (e.name === 'AbortError') return; }
+    }
+    const a = document.createElement('a');
+    a.href = shot.src;
+    a.download = 'ghost-selfie.jpg';
+    a.click();
+    boothMsg.textContent = 'Saved! Or press and hold the photo to keep it.';
   });
 })();
 </script>

@@ -152,8 +152,14 @@
   @keyframes pop { 50% { scale: 1.12; } }
 
   .status { min-height: 1.5em; margin: 0 0 14px; font-size: 18px; font-weight: 700; }
-  .selfie { margin-top: 30px; }
-  .share { margin-top: 16px; }
+  .selfie-card {
+    margin: 0 0 40px; padding: 24px 18px 26px; border-radius: 24px;
+    background: radial-gradient(120% 90% at 50% 0, rgba(255, 122, 24, .28), rgba(59, 29, 99, .5) 70%);
+    border: 2px solid rgba(255, 196, 107, .45);
+    box-shadow: 0 0 28px rgba(255, 122, 24, .25);
+  }
+  .selfie-card .hint { margin-bottom: 18px; }
+  .selfie-card .btn { font-size: 27px; min-height: 64px; }
   [hidden] { display: none !important; }
 
   /* ---------- Sleepy season ---------- */
@@ -208,7 +214,6 @@
     border: 2px solid rgba(251, 248, 255, .35); background: rgba(14, 7, 24, .6); color: var(--ghost);
     font-size: 20px; cursor: pointer;
   }
-  #shareStatus { margin-top: 12px; }
 
   .note {
     margin: 38px 6px 0; padding: 16px 18px; text-align: left;
@@ -288,15 +293,17 @@
 
 <section class="ground">
   <div class="wrap">
+    <div class="selfie-card">
+      <h2>Ghost Selfie</h2>
+      <p class="hint">Snap a photo and a ghost sneaks into it. Share it and haunt your friends!</p>
+      <button class="btn" id="selfieBtn" type="button">📸 Take a ghost selfie</button>
+    </div>
+
     <h2>Pumpkin Hunt</h2>
     <p class="hint">One gravestone hides a pumpkin. Tap to look behind them.</p>
     <div class="grid" id="grid"></div>
     <p class="status" id="status" aria-live="polite"></p>
     <button class="btn quiet" id="againBtn" type="button" hidden>Play again</button>
-
-    <button class="btn quiet selfie" id="selfieBtn" type="button">📸 Take a ghost selfie</button>
-    <button class="btn share" id="shareBtn" type="button">📤 Ghost a friend</button>
-    <p class="status" id="shareStatus" aria-live="polite"></p>
 
     <aside class="note">
       <p>Psst… find Viktor and whisper tonight's secret password:</p>
@@ -376,13 +383,6 @@ const passwordFor = now => {
   return PASSWORDS[day % PASSWORDS.length];
 };
 
-const shareText = (name, taps) => {
-  const found = taps && `I found the hidden pumpkin in ${taps} tap${taps === 1 ? '' : 's'} 🎃 Beat that:`;
-  if (name && found) return `My ghost name is ${name} 👻 and ${found}`;
-  if (name) return `I just got ghosted. My ghost name is ${name} 👻 What's yours?`;
-  if (found) return found;
-  return 'I just got ghosted 👻 Tap if you dare:';
-};
 // pure:end
 
 (() => {
@@ -557,7 +557,7 @@ const shareText = (name, taps) => {
 
   // --- Pumpkin Hunt ---
   const MISSES = ['👻', '🕸️', '🦇', '🍬', '🕷️', '🧦'];
-  let pumpkinAt, taps, bestTaps = null;
+  let pumpkinAt, taps;
   const newRound = () => {
     pumpkinAt = Math.floor(Math.random() * 9);
     taps = 0;
@@ -585,7 +585,6 @@ const shareText = (name, taps) => {
       $('grid').querySelectorAll('.stone').forEach(s => { s.disabled = true; });
       $('status').textContent = taps === 1 ? 'WOW! First try! 🎉' : `Found it in ${taps} taps! 🎉`;
       $('againBtn').hidden = false;
-      bestTaps = bestTaps ? Math.min(bestTaps, taps) : taps;
       wail();
     } else {
       stone.textContent = MISSES[Math.floor(Math.random() * MISSES.length)];
@@ -610,22 +609,6 @@ const shareText = (name, taps) => {
   tick();
   setInterval(tick, 1000);
   $('password').textContent = passwordFor(new Date());
-
-  // --- Share: native share sheet, else copy the link ---
-  $('shareBtn').addEventListener('click', async () => {
-    const msg = $('shareStatus');
-    const text = shareText(myName, bestTaps);
-    if (navigator.share) {
-      try { await navigator.share({ title: "You've been ghosted!", text, url: URL_TO_SHARE }); return; }
-      catch (e) { if (e.name === 'AbortError') return; }
-    }
-    try {
-      await navigator.clipboard.writeText(`${text} ${URL_TO_SHARE}`);
-      msg.textContent = 'Link copied! Go ghost a friend 👻';
-    } catch {
-      msg.textContent = `Share this: ${URL_TO_SHARE}`;
-    }
-  });
 
   // --- Ghost selfie: live camera with the ghost peeking in, everything stays on the phone ---
   const PEEK = { width: .42, right: -.06, bottom: .15, turn: -12 * Math.PI / 180 }; // matches .peek in CSS

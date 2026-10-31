@@ -192,11 +192,10 @@
   .peek { position: absolute; width: 42%; right: -6%; bottom: 15%; transform: rotate(-12deg); pointer-events: none; }
   .caption {
     position: absolute; left: 0; right: 0; bottom: 0; height: 17%; margin: 0;
-    display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 2.5cqw;
+    display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 3cqw;
     background: linear-gradient(rgba(29, 15, 51, 0), rgba(29, 15, 51, .85) 45%);
     font: 8.5cqw/1 var(--display); text-shadow: .6cqw .8cqw 0 var(--pumpkin);
   }
-  .caption small { font: 600 4cqw system-ui, sans-serif; color: var(--moon); text-shadow: none; margin-top: 1.5cqw; }
   .frame.done .peek, .frame.done .caption { display: none; }
   .frame.flash::after { content: ""; position: absolute; inset: 0; background: #fff; animation: flash .4s forwards; }
   @keyframes flash { to { opacity: 0; } }
@@ -327,7 +326,7 @@
     <video id="cam" playsinline muted autoplay></video>
     <img id="shot" alt="Your ghost selfie" hidden>
     <img class="peek" id="peek" alt="">
-    <p class="caption" aria-hidden="true">👻 You've been ghosted!<small>youhavebeenghosted.com</small></p>
+    <p class="caption" aria-hidden="true">👻 You've been ghosted!</p>
   </div>
   <p class="status" id="boothStatus" aria-live="polite">Your photo stays on your phone.</p>
   <div class="booth-row" id="liveRow"><button class="btn" id="snapBtn" type="button">📸 Snap!</button></div>
@@ -710,15 +709,12 @@ const passwordFor = now => {
     ctx.fillRect(0, H - band, W, band);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
-    ctx.font = `600 ${Math.round(W * .04)}px system-ui, sans-serif`;
-    ctx.fillStyle = '#ffc46b';
-    ctx.fillText('youhavebeenghosted.com', W / 2, H - W * .03);
     ctx.font = `${Math.round(W * .085)}px Chewy, system-ui, sans-serif`;
     ctx.shadowColor = '#ff7a18';
     ctx.shadowOffsetX = W * .006;
     ctx.shadowOffsetY = W * .008;
     ctx.fillStyle = '#fbf8ff';
-    ctx.fillText("👻 You've been ghosted!", W / 2, H - W * .09);
+    ctx.fillText("👻 You've been ghosted!", W / 2, H - W * .05);
 
     photo = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', .9));
     if (!photo) { boothMsg.textContent = "Hmm, that didn't work. Try again?"; return; }
